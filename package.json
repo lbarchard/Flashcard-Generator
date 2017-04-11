@@ -1,0 +1,19 @@
+{
+  "name": "flashcards",
+  "version": "1.0.0",
+  "description": "Presents a variety of flash cards",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lbarchard/Flashcard-Generator.git"
+  },
+  "author": "Les Barchard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lbarchard/Flashcard-Generator/issues"
+  },
+  "homepage": "https://github.com/lbarchard/Flashcard-Generator#readme"
+}
