@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080;        // set our port
 var clozeCards = [];
+var basicCards = [];
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -24,44 +25,57 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/clozecard', function(req, res) {
-    
-    // card = (Math.random().floor()*clozeCards.length)
+    //get a random card
     card = Math.floor(Math.random()*clozeCards.length);
-    console.log(card);
 
     res.json({
         fullText: clozeCards[card].fullText,
         cloze: clozeCards[card].cloze,
         partialText: clozeCards[card].partialText
-});
-    
-
-    // res.json({fullText: firstCard.fullText});
-
+    });
 });
 
-// more routes for our API will happen here
+router.get('/basiccard', function(req, res) {
+    //get a random card
+    card = Math.floor(Math.random()*basicCards.length);
+
+    res.json({
+        front: basicCards[card].front,
+        back: basicCards[card].back,
+    });
+});
+
 router.route('/clozecards')
-
     // create a clozecard (accessed at POST http://localhost:8080/api/clozecards)
     .post(function(req, res) {
-
         var clozeCard = {};
         ClozeCard.call(clozeCard, req.body.fullText, req.body.cloze);
         clozeCards.push(clozeCard);       
-        console.log(clozeCards)
 
         res.json({ 
-            message: 'Card created!',
+            message: 'Cloze card created!',
             fullText: clozeCards[clozeCards.length-1].fullText,
             cloze: clozeCards[clozeCards.length-1].cloze,
             partialText: clozeCards[clozeCards.length-1].partialText
         });
-        // res.json({cloze: req.body.cloze});
+    });
+
+router.route('/basiccards')
+    // create a clozecard (accessed at POST http://localhost:8080/api/clozecards)
+    .post(function(req, res) {
+        var basicCard = {};
+        BasicCard.call(basicCard, req.body.front, req.body.back);
+        basicCards.push(basicCard);       
+
+        res.json({ 
+            message: 'Basic card created!',
+            front: basicCards[basicCards.length-1].front,
+            back: basicCards[basicCards.length-1].back,
         });
+    });
         
-// REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
+// REGISTER THE ROUTES -------------------------------
+// all of routes will be prefixed with /api
 app.use('/api', router);
 
 // START THE SERVER

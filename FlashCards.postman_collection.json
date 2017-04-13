@@ -1,0 +1,99 @@
+{
+	"variables": [],
+	"info": {
+		"name": "FlashCards",
+		"_postman_id": "09bd44fd-e26b-e796-9570-8e272ce4fcd6",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get ClozecCard",
+			"request": {
+				"url": "http://localhost:8080/api/clozecard",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "This returns a random cloze card from those that have been created"
+			},
+			"response": []
+		},
+		{
+			"name": "POST ClozeCard",
+			"request": {
+				"url": "http://localhost:8080/api/clozecards",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "fullText",
+							"value": "Four score and seven years ago",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "cloze",
+							"value": "seven",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Creates a new cloze card flash card"
+			},
+			"response": []
+		},
+		{
+			"name": "Get BasicCard",
+			"request": {
+				"url": "http://localhost:8080/api/basiccard",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "This returns a random basic card from those that have been created"
+			},
+			"response": []
+		},
+		{
+			"name": "POST BasicCard",
+			"request": {
+				"url": "http://localhost:8080/api/clozecards",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "fullText",
+							"value": "Four score and seven years ago",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "cloze",
+							"value": "seven",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": "Creates a new basic flash card"
+			},
+			"response": []
+		}
+	]
+}
