@@ -24,9 +24,15 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/clozecard', function(req, res) {
+    
+    // card = (Math.random().floor()*clozeCards.length)
+    card = Math.floor(Math.random()*clozeCards.length);
+    console.log(card);
+
     res.json({
-    message: 'hooray! welcome to our apis!'
-    // fullText: firstCard.fullText
+        fullText: clozeCards[card].fullText,
+        cloze: clozeCards[card].cloze,
+        partialText: clozeCards[card].partialText
 });
     
 
