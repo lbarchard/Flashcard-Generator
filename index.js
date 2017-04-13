@@ -25,7 +25,7 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/clozecard', function(req, res) {
-    //get a random card
+    //get a random cloze card
     card = Math.floor(Math.random()*clozeCards.length);
 
     res.json({
@@ -36,7 +36,7 @@ router.get('/clozecard', function(req, res) {
 });
 
 router.get('/basiccard', function(req, res) {
-    //get a random card
+    //get a random basic card
     card = Math.floor(Math.random()*basicCards.length);
 
     res.json({
@@ -61,7 +61,7 @@ router.route('/clozecards')
     });
 
 router.route('/basiccards')
-    // create a clozecard (accessed at POST http://localhost:8080/api/clozecards)
+    // create a basic card (accessed at POST http://localhost:8080/api/basiccards)
     .post(function(req, res) {
         var basicCard = {};
         BasicCard.call(basicCard, req.body.front, req.body.back);
@@ -99,17 +99,3 @@ function ClozeCard(fullText, cloze) {
     }
 
 }
-
-
-
-//put BasicCard
-//put ClozeCard
-//delete BasicCard
-//delete ClozeCard
-//post BasicCard
-//post ClozeCard
-//get BasicCard
-//get ClozeCard
-
-
-// console.log(firstCard.partialText);
