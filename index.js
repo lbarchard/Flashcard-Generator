@@ -39,11 +39,11 @@ var router = express.Router();              // get an instance of the express Ro
 router.use(function(req, res, next) {
     // do logging
     console.log(req.originalUrl);
+    console.log(req);
     next(); // make sure we go to the next routes and don't stop here
 });
 
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/clozecard', function(req, res) {
     flashCardDB.query("SELECT * FROM cloze_flash_cards", function(dbErr, dbRes) {
         if (dbErr) throw dbErr;
@@ -74,14 +74,21 @@ router.route('/clozecards')
     .post(function(req, res) {
         var clozeCard = {};
         ClozeCard.call(clozeCard, req.body.fullText, req.body.cloze);
-        clozeCards.push(clozeCard);       
 
+        flashCardDB.query(
+            "INSERT INTO cloze_flash_cards set ?",clozeCard,function (err, res) {
+                if (err) {
+                    throw err;
+                }
+            }
+        );
         res.json({ 
             message: 'Cloze card created!',
-            fullText: clozeCards[clozeCards.length-1].fullText,
-            cloze: clozeCards[clozeCards.length-1].cloze,
-            partialText: clozeCards[clozeCards.length-1].partialText
+            fullText: clozeCard.full_text,
+            cloze: clozeCard.cloze,
+            partialText: clozeCard.partial_text
         });
+        clozeCard = {};
     });
 
 router.route('/basiccards')
@@ -89,13 +96,20 @@ router.route('/basiccards')
     .post(function(req, res) {
         var basicCard = {};
         BasicCard.call(basicCard, req.body.front, req.body.back);
-        basicCards.push(basicCard);       
 
+        flashCardDB.query(
+            "INSERT INTO basic_flash_cards set ?",basicCard,function (err, res) {
+                if (err) {
+                    throw err;
+                }
+            }
+        );
         res.json({ 
             message: 'Basic card created!',
-            front: basicCards[basicCards.length-1].front,
-            back: basicCards[basicCards.length-1].back,
+            front: basicCard.front,
+            back: basicCard.back,
         });
+        basicCard = {};
     });
         
 // REGISTER THE ROUTES -------------------------------
@@ -113,13 +127,13 @@ function BasicCard(front, back) {
 }
 
 function ClozeCard(fullText, cloze) {
-    this.fullText = fullText;
+    this.full_text = fullText;
     this.cloze = cloze;
     if (fullText.search(cloze) === -1) {
-        this.partialText = "Oops"
+        this.partial_text = "Oops"
     }
     else {
-        this.partialText = fullText.replace(cloze, "...");
+        this.partial_text = fullText.replace(cloze, "...");
     }
 
 }
