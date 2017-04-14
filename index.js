@@ -29,6 +29,7 @@ app.use(bodyParser.json());
 var port = process.env.PORT || 8080;        // set our port
 var clozeCards = [];  //array to store any created cloze cards
 var basicCards = [];  //array to store any created basic cards
+var card = 0 //the card to pull out of the cards array
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -44,23 +45,27 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/clozecard', function(req, res) {
-    //get a random cloze card
-    card = Math.floor(Math.random()*clozeCards.length);
-
-    res.json({
-        fullText: clozeCards[card].fullText,
-        cloze: clozeCards[card].cloze,
-        partialText: clozeCards[card].partialText
+    flashCardDB.query("SELECT * FROM cloze_flash_cards", function(dbErr, dbRes) {
+        if (dbErr) throw dbErr;
+        //get a random cloze card
+        card = Math.floor(Math.random()*dbRes.length);
+        res.json({
+            fullText: dbRes[card].full_text,
+            cloze: dbRes[card].cloze,
+            partialText: dbRes[card].partial_text
+        });
     });
 });
 
 router.get('/basiccard', function(req, res) {
-    //get a random basic card
-    card = Math.floor(Math.random()*basicCards.length);
-
-    res.json({
-        front: basicCards[card].front,
-        back: basicCards[card].back,
+    flashCardDB.query("SELECT * FROM basic_flash_cards", function(dbErr, dbRes) {
+        if (dbErr) throw dbErr;
+        //get a random basic card
+        card = Math.floor(Math.random()*dbRes.length);
+        res.json({
+            front: dbRes[card].front,
+            back: dbRes[card].back,
+        });
     });
 });
 
