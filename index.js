@@ -1,6 +1,25 @@
 var express    = require('express');  
 var app        = express();     
 var bodyParser = require('body-parser');
+var mysql      = require("mysql");
+
+var flashCardDB = mysql.createConnection({
+  host: "localhost",
+  port: 3306,
+
+  // Your username
+  user: "root",
+
+  // Your password
+  password: "Bmtsubs1!1",
+  database: "Flash_Card"
+});
+
+flashCardDB.connect(function(err) {
+  if (err) throw err;
+  console.log("connected as id " + flashCardDB.threadId);
+});
+
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -8,8 +27,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080;        // set our port
-var clozeCards = [];
-var basicCards = [];
+var clozeCards = [];  //array to store any created cloze cards
+var basicCards = [];  //array to store any created basic cards
 
 // ROUTES FOR OUR API
 // =============================================================================
