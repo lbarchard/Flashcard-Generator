@@ -11,7 +11,7 @@ var flashCardDB = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "Bmtsubs1!1",
+  password: "PASSWORD HERE",
   database: "Flash_Card"
 });
 
@@ -39,7 +39,7 @@ var router = express.Router();              // get an instance of the express Ro
 router.use(function(req, res, next) {
     // do logging
     console.log(req.originalUrl);
-    console.log(req);
+    console.log(req.body);
     next(); // make sure we go to the next routes and don't stop here
 });
 

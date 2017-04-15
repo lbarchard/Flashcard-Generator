@@ -26,26 +26,13 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
+						"value": "application/json",
 						"description": ""
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "fullText",
-							"value": "Four score and seven years ago",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "cloze",
-							"value": "seven",
-							"type": "text",
-							"enabled": true
-						}
-					]
+					"mode": "raw",
+					"raw": "{\n\"fullText\": \"I'm gonna make him an offer he can't refuse.\",\n\"cloze\": \"offer\"\n}"
 				},
 				"description": "Creates a new cloze card flash card"
 			},
@@ -65,31 +52,18 @@
 		{
 			"name": "POST BasicCard",
 			"request": {
-				"url": "http://localhost:8080/api/clozecards",
+				"url": "http://localhost:8080/api/basiccards",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
+						"value": "application/json",
 						"description": ""
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "fullText",
-							"value": "Four score and seven years ago",
-							"type": "text",
-							"enabled": true
-						},
-						{
-							"key": "cloze",
-							"value": "seven",
-							"type": "text",
-							"enabled": true
-						}
-					]
+					"mode": "raw",
+					"raw": "{\n\"front\": \"Who was the second president of the United States\",\n\"back\": \"John Adams\"\n}"
 				},
 				"description": "Creates a new basic flash card"
 			},
