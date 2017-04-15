@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 var port = process.env.PORT || 8080;        // set our port
 var clozeCards = [];  //array to store any created cloze cards
 var basicCards = [];  //array to store any created basic cards
-var card = 0 //the card to pull out of the cards array
+var card = 0 //the card to pull out of the cards table
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -74,20 +74,24 @@ router.route('/clozecards')
     .post(function(req, res) {
         var clozeCard = {};
         ClozeCard.call(clozeCard, req.body.fullText, req.body.cloze);
-
-        flashCardDB.query(
+        if (clozeCard.valid === true) {
+            delete clozeCard.valid;
+            flashCardDB.query(
             "INSERT INTO cloze_flash_cards set ?",clozeCard,function (err, res) {
                 if (err) {
                     throw err;
                 }
             }
-        );
-        res.json({ 
-            message: 'Cloze card created!',
-            fullText: clozeCard.full_text,
-            cloze: clozeCard.cloze,
-            partialText: clozeCard.partial_text
-        });
+            );
+            res.json({ 
+                message: 'Cloze card created!'
+            });
+        }
+        else {
+            res.json({
+                message: 'Cloze card was not valid, not created!'
+            })
+        }
         clozeCard = {};
     });
 
@@ -105,9 +109,7 @@ router.route('/basiccards')
             }
         );
         res.json({ 
-            message: 'Basic card created!',
-            front: basicCard.front,
-            back: basicCard.back,
+            message: 'Basic card created!'
         });
         basicCard = {};
     });
@@ -121,6 +123,11 @@ app.use('/api', router);
 app.listen(port);
 console.log('Magic happens on port ' + port);
 
+
+
+
+//My contructors!!!!
+// ==============================
 function BasicCard(front, back) {
     this.front = front;
     this.back = back;
@@ -131,9 +138,11 @@ function ClozeCard(fullText, cloze) {
     this.cloze = cloze;
     if (fullText.search(cloze) === -1) {
         this.partial_text = "Oops"
+        this.valid = false
     }
     else {
         this.partial_text = fullText.replace(cloze, "...");
+        this.valid = true
     }
 
 }
