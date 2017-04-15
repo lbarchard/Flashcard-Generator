@@ -80,16 +80,20 @@ router.route('/clozecards')
             "INSERT INTO cloze_flash_cards set ?",clozeCard,function (err, res) {
                 if (err) {
                     throw err;
+                    //probably need something here to respond but with the fact things weren't created.  But not
+                    //really sure how these throw errors really work.
                 }
             }
             );
             res.json({ 
-                message: 'Cloze card created!'
+                message: 'Cloze card created!',
+                success: true
             });
         }
         else {
             res.json({
-                message: 'Cloze card was not valid, not created!'
+                message: 'Cloze card was not valid, not created!',
+                success: false
             })
         }
         clozeCard = {};
@@ -105,11 +109,14 @@ router.route('/basiccards')
             "INSERT INTO basic_flash_cards set ?",basicCard,function (err, res) {
                 if (err) {
                     throw err;
+                    //probably need something here to respond but with the fact things weren't created.  But not
+                    //really sure how these throw errors really work.
                 }
             }
         );
         res.json({ 
-            message: 'Basic card created!'
+            message: 'Basic card created!',
+            success: true
         });
         basicCard = {};
     });
