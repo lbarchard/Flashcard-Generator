@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/lbarchard/Flashcard-Generator/issues"
   },
-  "homepage": "https://github.com/lbarchard/Flashcard-Generator#readme"
+  "homepage": "https://github.com/lbarchard/Flashcard-Generator#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "mysql": "^2.13.0",
+    "express": "^3.0.1",
+  },
+  "devDependencies": {}
 }
